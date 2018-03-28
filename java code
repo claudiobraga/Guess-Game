@@ -1,0 +1,80 @@
+/**
+ * Created by cjb on 27/03/2018.
+ */
+import java.lang.Math;
+public class Advinha {
+    public static void main(String[]args)
+        throws java.io.IOException {
+
+        boolean sair = false;
+        quebrar:
+
+        do {
+            /*Ciclo Principal*/
+            boolean guess = false;
+            char c;
+            int tentativas = 0;
+
+            /*Gerar o Número Aleatório entre o 0 e 100*/
+            double d = Math.random();
+            int num = (int) (100 * d);
+            
+            while (guess == false) { /*Ciclo Interno*/
+            /*Pedir o Número ao Utilizador*/
+                String s = "";
+                System.out.println("Qual é o Número (0 - 100, -1 para Desistir)");
+                while ((c =(char)System.in.read()) !=10)
+                s += c;
+
+                s.substring(0, s.length() - 1); /*Eliminação do lixo no final da String*/
+                int n = Integer.valueOf(s).intValue();
+                tentativas++; /*Incrementar o Contador de Tentativas*/
+
+            /*Testar a resposta do Utilizador*/
+                if (n == -1) {
+                    System.out.println("Você Desistiu do Game!!!");
+                    break quebrar;
+                }
+                if (n == num)
+                    guess = true;
+                else if (n > num)
+                    System.out.println(n + "? Não, o Número é mais Baixo!");
+                else
+                    System.out.println(n + "? Não o Número é mais Alto");
+            } /*Fim do Ciclo*/
+
+        /*Notificar o Utilizador da Victória*/
+            System.out.println("Você Advinhou o Número em " + tentativas + " Tentativas");
+
+        /*Perguntar se quer Jogar Novamente*/
+            boolean repetir; /*Variável que permite a saída do Ciclo*/
+            do {
+                System.out.println("Quer Jogar Novamente? (S/N)");
+                c = (char) System.in.read();
+                switch (c) {
+                    case 's':
+                    case 'S':
+                        System.out.println("Vamos Jogar outra vez");
+                        repetir = false;
+                        break;
+
+                    case 'n':
+                    case 'N':
+                        System.out.println("Até a próxima . . . ");
+                        repetir = false;
+                        sair = true;
+                        break;
+
+                    default:
+                        System.out.println("A sua resposta não é válida");
+                        repetir = true;
+                        break;
+                }/*Fim do Switch*/
+            }
+            while (repetir == true); /*Só sairemos deste ciclo quando houver uma resposta válida, S ou N*/
+            System.in.read();
+            System.in.read(); /*ler o RETURN da resposta*/
+        }
+        while (sair == false); /*Condição de saída do Ciclo Global*/
+    }
+}
